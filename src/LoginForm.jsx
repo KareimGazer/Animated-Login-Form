@@ -35,13 +35,13 @@ const LoginForm = () => {
 
     return (
         <form>
-            <div className="field">
-                <input type="email" name="email-input" className="login-form-input" placeholder="@xyz.com" />
+            <div className="login-form-field">
+                <input type="email" name="email-input" className="login-form-input" placeholder="" />
                 <label htmlFor="email-input" className="login-form-label">Email</label>
             </div>
 
-            <div className="field">
-                <input type={showPassword ? 'text' : 'password' } name="password-input" className="input" placeholder="" onChange={validatePassword}/>
+            <div className="login-form-field">
+                <input type={showPassword ? 'text' : 'password' } name="password-input" className="login-form-input" placeholder="" onChange={validatePassword}/>
                 <label htmlFor="password-input" className="login-form-label">Password</label>
                 <span className="toggle-password" onClick={() => setShowPassword(!showPassword)}>
                     {showPassword ? '🙈' : '👁️'}
