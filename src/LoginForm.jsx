@@ -7,7 +7,8 @@ import { useState } from "react"
  * @param {number} maxLength - The maximum length of the password (default: 64)
  * @returns {number} A number representing the strength of the password
  */
-const validatePasswordStrength = (password, minLength=8, maxLength=64) => {
+const validatePasswordStrength = (password, minLength = 8, maxLength = 64) => {
+    if (password.length === 0) return []
     const validations = [
         (password.length >= minLength && password.length <= maxLength), 
         ((/[a-z]/).test(password)),
@@ -28,7 +29,7 @@ const LoginForm = () => {
     const validatePassword = (e) => {
         const password = e.target.value
         const checks = validatePasswordStrength(password)
-        setStrength(checks.reduce((acc, cur) => acc + cur, 0))
+        setStrength(checks.reduce((acc, cur) => acc + cur, 0) - 1)
         setValidations(checks)
     }
 
@@ -40,7 +41,7 @@ const LoginForm = () => {
             </div>
 
             <div className="field">
-                <input type={showPassword ? 'text' : 'password' } name="password-input" className="input" placeholder="" onInput={validatePassword}/>
+                <input type={showPassword ? 'text' : 'password' } name="password-input" className="input" placeholder="" onChange={validatePassword}/>
                 <label htmlFor="password-input" className="login-form-label">Password</label>
                 <span className="toggle-password" onClick={() => setShowPassword(!showPassword)}>
                     {showPassword ? '🙈' : '👁️'}
@@ -56,14 +57,14 @@ const LoginForm = () => {
 
             {validations.length > 0 && validationsList({validations})}
             <div className="strength-text">{strengthText[strength]}</div>
-            <button disabled={strength < 4}>Sign Up</button>
+            <button disabled={strength < 3}>Sign Up</button>
 
         </form>
     )
 }
 
 const validationsList = ({ validations }) => {
-    if (validations.length === 0) return
+    if (validations.length < 1) return
     return (
         <ul>
             <li> {validations[0] ? '✔️' : '❌'} must be at least 5 characters</li>
